@@ -15,7 +15,7 @@ public class Champion {
     private Long id;
 
     @Column
-    private String championName;
+    private String name;
 
     @Column
     private String role;
