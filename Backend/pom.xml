@@ -79,9 +79,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.github.stelar7</groupId>
-			<artifactId>R4J</artifactId>
-			<version>Tag</version>
+			<groupId>com.github.taycaldwell</groupId>
+			<artifactId>riot-api-java</artifactId>
+			<version>4.2.0</version>
 		</dependency>
 
 	</dependencies>
