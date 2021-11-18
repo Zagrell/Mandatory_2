@@ -23,6 +23,19 @@ public class Summoner {
     @Column
     private int level;
 
+    @Column
+    private String rank;
+
+    @Column
+    private int wins;
+
+    @Column
+    private int losses;
+
+    @Column
+    private boolean friendStatus;
+
+
 //    @ManyToOne
 //    @JoinColumn(name = "match_id")
 //    @Nullable
