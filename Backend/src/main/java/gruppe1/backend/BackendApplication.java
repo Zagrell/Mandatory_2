@@ -8,36 +8,46 @@ import com.merakianalytics.orianna.types.core.league.League;
 import com.merakianalytics.orianna.types.core.staticdata.Champion;
 import com.merakianalytics.orianna.types.core.staticdata.Champions;
 import com.merakianalytics.orianna.types.core.summoner.Summoner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 @SpringBootApplication
 public class BackendApplication {
 
-    public static void main(String[] args) {
+    private static String apiKey;
+
+    @Autowired
+    public void setApiKey(@Value("${api-key}") String apiKey) {
+        BackendApplication.apiKey = apiKey;
+    }
+
+
+    public static void main(String[] args) throws IOException {
         SpringApplication.run(BackendApplication.class, args);
 
-        Orianna.setRiotAPIKey("RGAPI-0255eb63-b60e-49f0-93cb-a50997b8ad5c");
+        Orianna.setRiotAPIKey(apiKey);
         Orianna.setDefaultRegion(Region.EUROPE_WEST);
 
         Summoner summoner = Orianna.summonerNamed("Pattemand").get();
-        System.out.println(summoner.getName() + " is level " + summoner.getLevel() + " on the " + summoner.getRegion() + " server.");
 
         Champions champions = Orianna.getChampions();
         Champion randomChampion = champions.get((int) (Math.random() * champions.size()));
-        System.out.println("He enjoys playing champions such as " + randomChampion.getName());
 
         League challengerLeague = Orianna.challengerLeagueInQueue(Queue.RANKED_SOLO).get();
         Summoner bestEUW = challengerLeague.get(0).getSummoner();
-        System.out.println("He's not as good as " + bestEUW.getName() + " at League, but probably a better Java programmer!");
-
-
 
 
 
 
     }
-
 
 
 }
