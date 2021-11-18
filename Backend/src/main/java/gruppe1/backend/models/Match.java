@@ -16,9 +16,6 @@ public class Match {
     private Long id;
 
     @Column
-    private boolean friendStatus;
-
-    @Column
     private String outcome;
 
     @Column

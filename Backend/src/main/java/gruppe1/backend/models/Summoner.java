@@ -18,7 +18,7 @@ public class Summoner {
     private Long id;
 
     @Column
-    private String userName;
+    private String name;
 
     @Column
     private int level;
