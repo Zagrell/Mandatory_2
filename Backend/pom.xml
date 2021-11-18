@@ -17,13 +17,6 @@
 		<java.version>17</java.version>
 	</properties>
 
-	<repositories>
-		<repository>
-			<id>jitpack.io</id>
-			<url>https://jitpack.io</url>
-		</repository>
-	</repositories>
-
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -77,12 +70,17 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
-			<groupId>com.github.taycaldwell</groupId>
+			<groupId>com.github.rithms</groupId>
 			<artifactId>riot-api-java</artifactId>
-			<version>4.2.0</version>
+			<version>4.3.0</version>
+			<scope>compile</scope>
 		</dependency>
+			<dependency>
+				<groupId>com.merakianalytics.orianna</groupId>
+				<artifactId>orianna</artifactId>
+				<version>4.0.0-rc8</version>
+			</dependency>
 
 	</dependencies>
 
