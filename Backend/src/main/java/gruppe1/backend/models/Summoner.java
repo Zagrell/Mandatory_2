@@ -13,7 +13,6 @@ import java.util.List;
 @Entity
 public class Summoner {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 

@@ -27,6 +27,15 @@ import java.util.stream.Collectors;
 @Repository
 public class RiotRepo {
 
+    /**
+     * since riot has recently changed a lot of their api. No available java api fully works anymore,
+     * we use the orianna api since it seems to have the most functionality intact.
+     * But for everything concerning matches we made the http requests ourselves
+     * */
+
+
+
+
     private String apiKey;
     private String host;
     private String currentSummoner;
@@ -72,7 +81,11 @@ public class RiotRepo {
         return responseString.split(",");
     }
 
-    public Match getMatch(String matchId) throws IOException {
+    public  Match getMatch(String matchId) throws IOException {
+        return getMatch(matchId,currentSummoner);
+    }
+
+    public Match getMatch(String matchId, String currentSummoner) throws IOException {
         URL url = new URL(host + "/lol/match/v5/matches/" + matchId);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestProperty("X-Riot-Token",apiKey);
@@ -86,26 +99,30 @@ public class RiotRepo {
             response.append(inputLine);
         }
         in.close();
+
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         MatchDTO matchDTO = mapper.readValue(response.toString(),MatchDTO.class);
+
         ParticipantDTO participant = matchDTO.getInfo().getParticipants().stream()
                 .filter(participantDTO -> participantDTO.getPuuid().equals(currentSummoner))
                 .findFirst().get();
 
         Match matchToReturn = new Match();
+
         matchToReturn.setId(matchId);
         matchToReturn.setPerspective(currentSummoner);
-
-
         matchToReturn.setWin(participant.isWin());
         matchToReturn.setMatchStart(matchDTO.getInfo().getGameCreation());
         matchToReturn.setDuration(matchDTO.getInfo().getGameDuration());
         matchToReturn.setKills(participant.getKills());
         matchToReturn.setDeaths(participant.getDeaths());
+        matchToReturn.setAssists(participant.getAssists());
+        matchToReturn.setChampionName(participant.getChampionName());
+        matchToReturn.setGameMode(matchDTO.getInfo().getGameMode());
 
 
-        return null;
+        return matchToReturn;
 
     }
 
