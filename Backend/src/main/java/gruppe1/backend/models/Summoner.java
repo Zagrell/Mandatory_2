@@ -14,7 +14,7 @@ import java.util.List;
 public class Summoner {
 
     @Id
-    private Long id;
+    private String puuid;
 
     @Column
     private String name;
@@ -23,7 +23,7 @@ public class Summoner {
     private int level;
 
     @Column
-    private String rank;
+    private String ranking;
 
     @Column
     private int wins;
@@ -31,8 +31,6 @@ public class Summoner {
     @Column
     private int losses;
 
-    @Column
-    private boolean friendStatus;
 
 
 //    @ManyToOne

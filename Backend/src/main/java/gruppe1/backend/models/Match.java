@@ -11,7 +11,6 @@ import java.time.LocalDate;
 public class Match {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private String id; // same as riot match id
 

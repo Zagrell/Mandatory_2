@@ -59,6 +59,9 @@ public class RiotRepo {
     }
 
     public String[] getMatchHistory(String summonerPuuid) throws IOException {
+
+        currentSummoner = summonerPuuid;
+
         URL url = new URL(host + "/lol/match/v5/matches/by-puuid/" + summonerPuuid + "/ids");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestProperty("X-Riot-Token",apiKey);
@@ -85,7 +88,7 @@ public class RiotRepo {
         return getMatch(matchId,currentSummoner);
     }
 
-    public Match getMatch(String matchId, String currentSummoner) throws IOException {
+    public Match getMatch(String matchId, String summonerPuuid) throws IOException {
         URL url = new URL(host + "/lol/match/v5/matches/" + matchId);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestProperty("X-Riot-Token",apiKey);
@@ -105,13 +108,13 @@ public class RiotRepo {
         MatchDTO matchDTO = mapper.readValue(response.toString(),MatchDTO.class);
 
         ParticipantDTO participant = matchDTO.getInfo().getParticipants().stream()
-                .filter(participantDTO -> participantDTO.getPuuid().equals(currentSummoner))
+                .filter(participantDTO -> participantDTO.getPuuid().equals(summonerPuuid))
                 .findFirst().get();
 
         Match matchToReturn = new Match();
 
         matchToReturn.setId(matchId);
-        matchToReturn.setPerspective(currentSummoner);
+        matchToReturn.setPerspective(summonerPuuid);
         matchToReturn.setWin(participant.isWin());
         matchToReturn.setMatchStart(matchDTO.getInfo().getGameCreation());
         matchToReturn.setDuration(matchDTO.getInfo().getGameDuration());
@@ -120,7 +123,6 @@ public class RiotRepo {
         matchToReturn.setAssists(participant.getAssists());
         matchToReturn.setChampionName(participant.getChampionName());
         matchToReturn.setGameMode(matchDTO.getInfo().getGameMode());
-
 
         return matchToReturn;
 
