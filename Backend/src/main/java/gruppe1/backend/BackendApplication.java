@@ -8,6 +8,7 @@ import com.merakianalytics.orianna.types.core.league.League;
 import com.merakianalytics.orianna.types.core.staticdata.Champion;
 import com.merakianalytics.orianna.types.core.staticdata.Champions;
 import com.merakianalytics.orianna.types.core.summoner.Summoner;
+import gruppe1.backend.repositories.RiotRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
@@ -23,10 +24,16 @@ import java.net.URL;
 public class BackendApplication {
 
     private static String apiKey;
+    private static RiotRepo repo;
 
     @Autowired
     public void setApiKey(@Value("${api-key}") String apiKey) {
         BackendApplication.apiKey = apiKey;
+    }
+
+    @Autowired
+    public void setRepo(RiotRepo repo){
+        BackendApplication.repo = repo;
     }
 
 
@@ -44,7 +51,10 @@ public class BackendApplication {
         League challengerLeague = Orianna.challengerLeagueInQueue(Queue.RANKED_SOLO).get();
         Summoner bestEUW = challengerLeague.get(0).getSummoner();
 
-
+        String[] matchHistory = repo.getMatchHistory(summoner.getPuuid());
+        for(String matchId: matchHistory){
+            repo.getMatch(matchId);
+        }
 
 
     }

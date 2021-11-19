@@ -13,13 +13,35 @@ public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private Long id;
+    private String id; // same as riot match id
 
     @Column
-    private String outcome;
+    private String perspective; // puuid of the summoner whose match history this match is from
+    //det her vi kan putte many to many og linke til vores summoner klasse
 
     @Column
-    private LocalDate matchDate;
+    private boolean win;
+
+    @Column
+    private long matchStart; //unix timestamp
+
+    @Column
+    private long duration; // duration in seconds
+
+    @Column
+    private int kills;
+
+    @Column
+    private int deaths;
+
+    @Column
+    private int assists;
+
+    @Column
+    private String gameMode;
+
+    @Column
+    private String championName;
 
 //    @OneToMany
 //    @JoinColumn (name = "summoner_id")

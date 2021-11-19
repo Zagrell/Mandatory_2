@@ -1,11 +1,13 @@
 package gruppe1.backend.repositories;
 
 import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.merakianalytics.orianna.Orianna;
 import com.merakianalytics.orianna.types.common.Region;
 import gruppe1.backend.BackendApplication;
-import gruppe1.backend.models.Match;
-import gruppe1.backend.models.Summoner;
+import gruppe1.backend.dto.*;
+import gruppe1.backend.models.*;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +21,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.stream.Collectors;
 
 
 @Repository
@@ -26,6 +29,7 @@ public class RiotRepo {
 
     private String apiKey;
     private String host;
+    private String currentSummoner;
 
     @Autowired
     public RiotRepo(@Value("${api-key}") String apiKey){
@@ -39,9 +43,9 @@ public class RiotRepo {
 
             com.merakianalytics.orianna.types.core.summoner.Summoner oriannaSummoner = Orianna.summonerNamed(name).get();
             Summoner ourSummoner = new Summoner();
-            ourSummoner.setUserName(oriannaSummoner.getName());
+            ourSummoner.setName(oriannaSummoner.getName());
             ourSummoner.setLevel(oriannaSummoner.getLevel());
-
+            currentSummoner = oriannaSummoner.getPuuid();
             return ourSummoner;
     }
 
@@ -54,7 +58,7 @@ public class RiotRepo {
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
-        StringBuffer response = new StringBuffer();
+        StringBuilder response = new StringBuilder();
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
         }
@@ -64,9 +68,8 @@ public class RiotRepo {
         responseString = responseString.replace("[","");
         responseString = responseString.replace("]","");
         responseString = responseString.replace("\"","");
-        String[] stringArrayToReturn = responseString.split(",");
 
-        return stringArrayToReturn;
+        return responseString.split(",");
     }
 
     public Match getMatch(String matchId) throws IOException {
@@ -78,12 +81,28 @@ public class RiotRepo {
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(con.getInputStream()));
         String inputLine;
-        StringBuffer response = new StringBuffer();
+        StringBuilder response = new StringBuilder();
         while ((inputLine = in.readLine()) != null) {
             response.append(inputLine);
         }
         in.close();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        MatchDTO matchDTO = mapper.readValue(response.toString(),MatchDTO.class);
+        ParticipantDTO participant = matchDTO.getInfo().getParticipants().stream()
+                .filter(participantDTO -> participantDTO.getPuuid().equals(currentSummoner))
+                .findFirst().get();
 
+        Match matchToReturn = new Match();
+        matchToReturn.setId(matchId);
+        matchToReturn.setPerspective(currentSummoner);
+
+
+        matchToReturn.setWin(participant.isWin());
+        matchToReturn.setMatchStart(matchDTO.getInfo().getGameCreation());
+        matchToReturn.setDuration(matchDTO.getInfo().getGameDuration());
+        matchToReturn.setKills(participant.getKills());
+        matchToReturn.setDeaths(participant.getDeaths());
 
 
         return null;
