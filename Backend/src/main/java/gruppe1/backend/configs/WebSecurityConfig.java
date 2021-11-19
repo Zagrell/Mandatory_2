@@ -35,15 +35,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         http
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
+               // .antMatchers("/").permitAll()
                 .antMatchers("/swagger-ui/").hasRole("ADMIN")
-                .antMatchers("/beers").hasAnyRole("ADMIN", "EMPLOYEE")
+                .antMatchers("/").hasAnyRole("ADMIN", "EMPLOYEE")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .and()
                 .logout()
                 .permitAll();
+
+
     }
 
 

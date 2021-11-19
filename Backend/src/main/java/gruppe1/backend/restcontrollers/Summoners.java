@@ -1,4 +1,4 @@
-package gruppe1.backend.controllers;
+package gruppe1.backend.restcontrollers;
 
 import gruppe1.backend.models.Summoner;
 import gruppe1.backend.repositories.SummonerRepository;
