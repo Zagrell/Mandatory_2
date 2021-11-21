@@ -9,10 +9,12 @@ const summonerWrapper = document.getElementById("summoner-wrapper");
 function createSummoner(summoner) {
 
     const summonerElement = document.createElement("div");
-    summonerElement.innerText = ` 
-    <p>name: ${escapeHTML(summoner.name)}</p>
-    <p>note: ${escapeHTML(summoner.note)}</p>
-    <p>level: ${escapeHTML(summoner.level.toString())}</p>
+    summonerElement.innerHTML = `
+    <a href="./matchHistory.html?puuid=${summoner.puuid}">
+        <p>name: ${escapeHTML(summoner.name)}</p>
+        <p>note: ${escapeHTML(summoner.note)}</p>
+        <p>level: ${escapeHTML(summoner.level.toString())}</p>
+    </a>
     `;
 
     summonerWrapper.appendChild(summonerElement);
@@ -33,7 +35,7 @@ function createNewSummoner() {
         body: JSON.stringify(newSummoner)
     })
         .then(response => {
-            if(response.status === 200){
+            if (response.status === 200) {
                 createSummoner(newSummoner);
             } else {
                 console.log("Summoner not created.", response.status);
