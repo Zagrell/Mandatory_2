@@ -20,7 +20,7 @@ function constructChampionTableRow(championTableRow, champion) {
     <td>
         <a href="./champions.html?championId=${champion.id}">
             <p class="row-champion-name">${escapeHTML(champion.name)}</p>
-    </a>
+        </a>
     <td>
         <p class="row-champion-role">${escapeHTML(champion.role)}</p>
     </td>

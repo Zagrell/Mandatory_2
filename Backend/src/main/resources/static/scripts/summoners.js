@@ -7,8 +7,13 @@ fetch("http://localhost:8080/summoners")
 const summonerWrapper = document.getElementById("summoner-wrapper");
 
 function createSummoner(summoner) {
+
     const summonerElement = document.createElement("div");
-    summonerElement.innerText = summoner.name;
+    summonerElement.innerText = ` 
+    <p>name: ${escapeHTML(summoner.name)}</p>
+    <p>note: ${escapeHTML(summoner.note)}</p>
+    <p>level: ${escapeHTML(summoner.level.toString())}</p>
+    `;
 
     summonerWrapper.appendChild(summonerElement);
 }
