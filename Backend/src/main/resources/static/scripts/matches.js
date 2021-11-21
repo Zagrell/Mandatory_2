@@ -13,7 +13,6 @@ function createMatchTableRow(match) {
     matchesTableBody.appendChild(matchTableRow);
 
     constructMatchTableRow(matchTableRow, match);
-
 }
 
 function constructMatchTableRow(matchesTableRow, match) {
