@@ -5,6 +5,8 @@ import gruppe1.backend.repositories.SummonerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.NoSuchElementException;
+
 @RestController
 public class Summoners {
 
@@ -17,10 +19,16 @@ public class Summoners {
         return summonerRepository.findAllSummoners();
     }
 
-    @PostMapping("/summoners/{summonerName}")
-    public Summoner addSummoner(@PathVariable String name){
-        return summonerRepository.saveSummonerWithName(name);
+    @PostMapping("/summoners")
+    public Summoner addSummoner(@RequestBody String summonerName){
+        try {
+            return summonerRepository.saveSummonerWithName(summonerName);
+        }catch (NoSuchElementException e){
+            e.printStackTrace();
+            return null;
+        }
     }
+
 
     @DeleteMapping("summoners/{puuid}")
     public String deleteSummoner(@PathVariable String puuid){
