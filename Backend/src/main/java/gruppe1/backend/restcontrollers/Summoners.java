@@ -20,9 +20,10 @@ public class Summoners {
     }
 
     @PostMapping("/summoners")
-    public Summoner addSummoner(@RequestBody String summonerName){
+    public Summoner addSummoner(@RequestBody Summoner summoner){
+        System.out.println(summoner.getName());
         try {
-            return summonerRepository.saveSummonerWithName(summonerName);
+            return summonerRepository.saveSummonerWithName(summoner.getName());
         }catch (NoSuchElementException e){
             e.printStackTrace();
             return null;

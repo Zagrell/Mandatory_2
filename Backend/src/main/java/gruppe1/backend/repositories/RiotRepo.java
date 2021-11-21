@@ -41,7 +41,7 @@ public class RiotRepo {
     }
 
     public Summoner addRiotSummonerData(Summoner summoner) {
-
+        System.out.println(summoner);
         com.merakianalytics.orianna.types.core.summoner.Summoner oriannaSummoner = Orianna.summonerWithPuuid(summoner.getPuuid()).get();
 
         summoner.setName(oriannaSummoner.getName());
@@ -57,7 +57,7 @@ public class RiotRepo {
             Summoner ourSummoner = new Summoner();
             ourSummoner.setPuuid(oriannaSummoner.getPuuid());
             return addRiotSummonerData(ourSummoner);
-        } catch (Exception e) {
+        } catch (NoSuchElementException e) {
             throw new NoSuchElementException("no summoner with that name");
         }
     }

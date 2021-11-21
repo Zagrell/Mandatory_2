@@ -17,7 +17,7 @@ function createNewSummoner() {
     const name = document.getElementById("add-summoner-name").value;
 
     const newSummoner = {
-        summonerName: name,
+        name: name,
     }
 
     fetch("http://localhost:8080/summoners", {
@@ -33,10 +33,6 @@ function createNewSummoner() {
             } else {
                 console.log("Summoner not created.", response.status);
             }
-        })
-        .then(response => response.json())
-        .then(result => {
-            console.log(result);
         })
         .catch(error => console.log("Network problem", error));
 
