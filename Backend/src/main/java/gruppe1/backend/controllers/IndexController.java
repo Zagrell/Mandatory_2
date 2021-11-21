@@ -1,4 +1,4 @@
-package gruppe1.frontend.riotfrontend.controllers;
+package gruppe1.backend.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +8,7 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(){
-        return "../static/html/summoners.html";
+        return "../static/html/index.html";
     }
 
 }
