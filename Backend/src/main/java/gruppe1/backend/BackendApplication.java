@@ -17,25 +17,8 @@ import java.net.URL;
 @SpringBootApplication
 public class BackendApplication {
 
-    private static String apiKey;
-    private static RiotRepo repo;
-
-    @Autowired
-    public void setApiKey(@Value("${api-key}") String apiKey) {
-        BackendApplication.apiKey = apiKey;
-    }
-
-    @Autowired
-    public void setRepo(RiotRepo repo){
-        BackendApplication.repo = repo;
-    }
-
-
     public static void main(String[] args) throws IOException {
         SpringApplication.run(BackendApplication.class, args);
-        Summoner summoner = repo.findSummonerNamed("Pattemand");
-        System.out.println(summoner.getPuuid());
-
     }
 
 
