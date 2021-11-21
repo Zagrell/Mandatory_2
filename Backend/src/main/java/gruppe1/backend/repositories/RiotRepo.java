@@ -21,6 +21,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 
@@ -38,7 +39,6 @@ public class RiotRepo {
 
     private String apiKey;
     private String host;
-    private String currentSummoner;
 
     @Autowired
     public RiotRepo(@Value("${api-key}") String apiKey){
@@ -48,19 +48,32 @@ public class RiotRepo {
         Orianna.setDefaultRegion(Region.EUROPE_WEST);
     }
 
-    public Summoner getSummonerByName(String name){
+    public Summoner addRiotSummonerData(Summoner summoner){
 
+        com.merakianalytics.orianna.types.core.summoner.Summoner oriannaSummoner = Orianna.summonerWithPuuid(summoner.getPuuid()).get();
+
+        summoner.setName(oriannaSummoner.getName());
+        summoner.setLevel(oriannaSummoner.getLevel());
+
+        return summoner;
+    }
+
+    public Summoner findSummonerNamed(String name){
+
+        try {
             com.merakianalytics.orianna.types.core.summoner.Summoner oriannaSummoner = Orianna.summonerNamed(name).get();
             Summoner ourSummoner = new Summoner();
-            ourSummoner.setName(oriannaSummoner.getName());
-            ourSummoner.setLevel(oriannaSummoner.getLevel());
-            currentSummoner = oriannaSummoner.getPuuid();
-            return ourSummoner;
+            ourSummoner.setPuuid(oriannaSummoner.getPuuid());
+            return addRiotSummonerData(ourSummoner);
+        }catch(Exception e){
+            throw new NoSuchElementException("no summoner with that name");
+            }
     }
+
 
     public String[] getMatchHistory(String summonerPuuid) throws IOException {
 
-        currentSummoner = summonerPuuid;
+
 
         URL url = new URL(host + "/lol/match/v5/matches/by-puuid/" + summonerPuuid + "/ids");
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -84,11 +97,7 @@ public class RiotRepo {
         return responseString.split(",");
     }
 
-    public  Match getMatch(String matchId) throws IOException {
-        return getMatch(matchId,currentSummoner);
-    }
-
-    public Match getMatch(String matchId, String summonerPuuid) throws IOException {
+    public Match getMatch(String matchId, Summoner summoner) throws IOException {
         URL url = new URL(host + "/lol/match/v5/matches/" + matchId);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestProperty("X-Riot-Token",apiKey);
@@ -108,13 +117,13 @@ public class RiotRepo {
         MatchDTO matchDTO = mapper.readValue(response.toString(),MatchDTO.class);
 
         ParticipantDTO participant = matchDTO.getInfo().getParticipants().stream()
-                .filter(participantDTO -> participantDTO.getPuuid().equals(summonerPuuid))
+                .filter(participantDTO -> participantDTO.getPuuid().equals(summoner.getPuuid()))
                 .findFirst().get();
 
         Match matchToReturn = new Match();
 
-        matchToReturn.setId(matchId);
-        matchToReturn.setPerspective(summonerPuuid);
+        matchToReturn.setMatchId(matchId);
+        matchToReturn.setSummoner(summoner);
         matchToReturn.setWin(participant.isWin());
         matchToReturn.setMatchStart(matchDTO.getInfo().getGameCreation());
         matchToReturn.setDuration(matchDTO.getInfo().getGameDuration());

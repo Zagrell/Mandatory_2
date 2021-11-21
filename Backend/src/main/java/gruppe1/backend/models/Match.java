@@ -11,35 +11,42 @@ import java.time.LocalDate;
 public class Match {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private String id; // same as riot match id
+    private Long id;
 
     @Column
-    private String perspective; // puuid of the summoner whose match history this match is from
-    //det her vi kan putte many to many og linke til vores summoner klasse
+    private String matchId;
 
     @Column
+    private String note;
+
+    @ManyToOne
+    @JoinColumn(name="puuid", nullable=false)
+    private Summoner summoner;
+
+    @Transient
     private boolean win;
 
-    @Column
+    @Transient
     private long matchStart; //unix timestamp
 
-    @Column
+    @Transient
     private long duration; // duration in seconds
 
-    @Column
+    @Transient
     private int kills;
 
-    @Column
+    @Transient
     private int deaths;
 
-    @Column
+    @Transient
     private int assists;
 
-    @Column
+    @Transient
     private String gameMode;
 
-    @Column
+    @Transient
     private String championName;
 
 //    @OneToMany

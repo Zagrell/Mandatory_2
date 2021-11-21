@@ -17,18 +17,25 @@ public class Summoner {
     private String puuid;
 
     @Column
+    private String note;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "summoner", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    private List<Match> savedMatches;
+
+    @Transient
     private String name;
 
-    @Column
+    @Transient
     private int level;
 
-    @Column
+    @Transient
     private String ranking;
 
-    @Column
+    @Transient
     private int wins;
 
-    @Column
+    @Transient
     private int losses;
 
 

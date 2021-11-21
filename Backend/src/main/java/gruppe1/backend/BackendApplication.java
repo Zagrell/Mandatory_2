@@ -39,24 +39,6 @@ public class BackendApplication {
 
     public static void main(String[] args) throws IOException {
         SpringApplication.run(BackendApplication.class, args);
-
-        Orianna.setRiotAPIKey(apiKey);
-        Orianna.setDefaultRegion(Region.EUROPE_WEST);
-
-        Summoner summoner = Orianna.summonerNamed("Pattemand").get();
-
-        Champions champions = Orianna.getChampions();
-        Champion randomChampion = champions.get((int) (Math.random() * champions.size()));
-
-        League challengerLeague = Orianna.challengerLeagueInQueue(Queue.RANKED_SOLO).get();
-        Summoner bestEUW = challengerLeague.get(0).getSummoner();
-
-        String[] matchHistory = repo.getMatchHistory(summoner.getPuuid());
-        for(String matchId: matchHistory){
-            repo.getMatch(matchId);
-        }
-
-
     }
 
 
