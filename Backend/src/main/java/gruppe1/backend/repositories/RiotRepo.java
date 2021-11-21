@@ -41,9 +41,9 @@ public class RiotRepo {
     }
 
     public Summoner addRiotSummonerData(Summoner summoner) {
-        System.out.println(summoner);
-        com.merakianalytics.orianna.types.core.summoner.Summoner oriannaSummoner = Orianna.summonerWithPuuid(summoner.getPuuid()).get();
 
+        com.merakianalytics.orianna.types.core.summoner.Summoner oriannaSummoner = Orianna.summonerWithPuuid(summoner.getPuuid()).get();
+        System.out.println(oriannaSummoner);
         summoner.setName(oriannaSummoner.getName());
         summoner.setLevel(oriannaSummoner.getLevel());
 

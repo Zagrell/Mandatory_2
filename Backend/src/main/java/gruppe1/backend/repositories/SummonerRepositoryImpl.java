@@ -38,6 +38,7 @@ class SummonerRepositoryImpl implements SummonerRepositoryCustom{
     @Override
     public Summoner saveSummonerWithName(String summonerName) {
         Summoner summonerToSave = riotRepo.findSummonerNamed(summonerName);
+        summonerToSave.setNote("");
         summonerRepository.save(summonerToSave);
         return summonerToSave;
     }
