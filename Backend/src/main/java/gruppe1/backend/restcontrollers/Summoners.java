@@ -23,8 +23,9 @@ public class Summoners {
     }
 
     @DeleteMapping("summoners/{puuid}")
-    public void deleteSummoner(@PathVariable String puuid){
+    public String deleteSummoner(@PathVariable String puuid){
         summonerRepository.deleteById(puuid);
+        return "OK";
     }
 
 

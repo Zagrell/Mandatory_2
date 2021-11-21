@@ -8,8 +8,10 @@ import java.util.List;
 interface  SummonerRepositoryCustom{
 
 
-    Summoner saveSummonerWithName(String summonerName);
-
     List<Summoner> findAllSummoners();
+
+    Summoner findSummonerWithPuuid(String puuid);
+
+    Summoner saveSummonerWithName(String summonerName);
 
 }

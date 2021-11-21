@@ -15,8 +15,16 @@ class SummonerRepositoryImpl implements SummonerRepositoryCustom{
     RiotRepo riotRepo;
 
     @Override
-    public Summoner saveSummonerWithName(String summonerName) {
-        return riotRepo.findSummonerNamed(summonerName);
+    public Summoner findSummonerWithPuuid(String puuid) {
+        try{
+            Summoner summoner = summonerRepository.findById(puuid).get();
+            return riotRepo.addRiotSummonerData(summoner);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        return null;
     }
 
     @Override
@@ -25,5 +33,10 @@ class SummonerRepositoryImpl implements SummonerRepositoryCustom{
         List<Summoner> summoners = summonerRepository.findAll();
         System.out.println("found " + summoners.size() + " summoners");
         return summoners.stream().map(summoner -> riotRepo.addRiotSummonerData(summoner)).collect(Collectors.toList());
+    }
+
+    @Override
+    public Summoner saveSummonerWithName(String summonerName) {
+        return riotRepo.findSummonerNamed(summonerName);
     }
 }
