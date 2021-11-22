@@ -36,10 +36,14 @@ function createNewSummoner() {
     })
         .then(response => {
             if (response.status === 200) {
-                createSummoner(newSummoner);
+                return response.json();
             } else {
                 console.log("Summoner not created.", response.status);
+                throw 'Summoner not created';
             }
+        })
+        .then(result => {
+           createSummoner(result);
         })
         .catch(error => console.log("Network problem", error));
 
