@@ -2,5 +2,9 @@ h1 {
     display: flex;
     justify-content: center;
     color: white;
-    top: 50%;
+}
+
+.iframe-container {
+    text-align: center;
+    width: 100%;
 }
