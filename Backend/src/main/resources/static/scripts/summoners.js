@@ -1,20 +1,26 @@
 fetch("http://localhost:8080/summoners")
     .then(response => response.json())
     .then(result => {
-        result.map(createSummoner);
+        result.map(createSummonerCard);
     });
 
 const summonerWrapper = document.getElementById("summoner-wrapper");
 
-function createSummoner(summoner) {
-
+function createSummonerCard(summoner) {
     const summonerElement = document.createElement("div");
+    summonerElement.className = "card";
     summonerElement.innerHTML = `
-    <a href="./matchHistory.html?puuid=${summoner.puuid}">
-        <p>name: ${escapeHTML(summoner.name)}</p>
+    <td>
+        <a href="./matchHistory.html?puuid=${summoner.puuid}">
+            <p>name: ${escapeHTML(summoner.name)}</p>
+        </a>
+    </td>
+    <td>
         <p>note: ${escapeHTML(summoner.note)}</p>
+    </td>
+    <td>
         <p>level: ${escapeHTML(summoner.level.toString())}</p>
-    </a>
+    </td>
     `;
 
     summonerWrapper.appendChild(summonerElement);
@@ -42,7 +48,7 @@ function createNewSummoner() {
             }
         })
         .then(result => {
-           createSummoner(result);
+           createSummonerCard(result);
         })
         .catch(error => console.log("Network problem", error));
 
