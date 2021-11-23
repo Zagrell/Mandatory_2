@@ -38,7 +38,6 @@ function createNewSummoner() {
             if (response.status === 200) {
                 return response.json();
             } else {
-                console.log("Summoner not created.", response.status);
                 throw 'Summoner not created';
             }
         })
