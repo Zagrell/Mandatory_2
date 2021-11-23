@@ -56,9 +56,26 @@ function constructMatchesTableRow(matchesTableRow, match) {
 <button id="updateNote-button-${match.matchId}">📝</button>
 </td>
 <td>
-<button onclick="deleteMatch(${match.id})">❌</button>
+<button style="display: none" onclick="deleteMatch(${match.id})">❌</button>
 </td>
 `;
 
+    if (match.id !== null) {
+        document.getElementById(`update-button-${match.id}`)
+            .addEventListener("click", () => updateMatch(match))
+        document.getElementById(`update-button-${match.id}`).style.display="";
+    }
 
+}
+
+function deleteMatch(matchId) {
+    fetch("http://localhost:8080/matches/" + matchId, {
+        method: "DELETE"
+    }).then(response => {
+        if (response.status === 200) {
+            document.getElementById(matchId).remove();
+        } else {
+            console.log(response.status);
+        }
+    });
 }
