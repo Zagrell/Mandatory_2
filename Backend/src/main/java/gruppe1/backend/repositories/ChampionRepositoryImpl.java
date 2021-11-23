@@ -14,7 +14,7 @@ public class ChampionRepositoryImpl implements ChampionRepositoryCustom{
 
     @Override
     public List<String> findAllChampions() {
-        return riotRepo.findAllChampionNames();
+        return riotRepo.findAllChampionImages();
     }
 
 

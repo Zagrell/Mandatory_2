@@ -20,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 
 
@@ -33,8 +34,9 @@ public class RiotRepo {
      */
 
 
-    private String apiKey;
-    private String host;
+    private final String apiKey;
+    private final String host;
+    private static final String BASE_IMAGE_PATH = "http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion/";
 
     @Autowired
     public RiotRepo(@Value("${api-key}") String apiKey) {
@@ -65,35 +67,37 @@ public class RiotRepo {
         }
     }
 
-    public List<String> findAllChampionNames(){
+    public List<String> findAllChampionImages() {
         Champions oriannaChampions = Orianna.getChampions();
-        List<String> championNameList = new ArrayList<>();
-        oriannaChampions.forEach(champion -> championNameList.add(champion.getName()));
-        return championNameList;
+        List<String> championImageList = new ArrayList<>();
+
+        oriannaChampions.forEach(champion -> {
+            championImageList.add(BASE_IMAGE_PATH + champion.getImage().getFull());
+        });
+        return championImageList;
     }
 
-    public List<Champion> findAllChampions(){
+    public List<Champion> findAllChampions() {
         Champions oriannaChampions = Orianna.getChampions();
         List<Champion> ourChampions = new ArrayList<>();
         oriannaChampions.forEach(oriannaChampion -> {
-            Champion ourChampion;
-
+            Champion ourChampion = new Champion();
         });
         return null;
     }
 
-    public Champion findChampionNamed(String championName){
-        try{
+    public Champion findChampionNamed(String championName) {
+        try {
             com.merakianalytics.orianna.types.core.staticdata.Champion oriannaChampion = Orianna.championNamed(championName).get();
             Champion ourChampion = new Champion();
             ourChampion.setName(championName);
             return addRiotChampionData(ourChampion);
-        }catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             throw new NoSuchElementException("no champion with that name");
         }
     }
 
-    public Champion addRiotChampionData(Champion champion){
+    public Champion addRiotChampionData(Champion champion) {
         com.merakianalytics.orianna.types.core.staticdata.Champion oriannaChampion = Orianna.championNamed(champion.getName()).get();
         champion.setTitle(oriannaChampion.getTitle());
         champion.setTags(oriannaChampion.getTags());

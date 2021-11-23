@@ -20,6 +20,8 @@ public class Champion {
     @Transient
     private String title;
 
+    @Transient
+    private String squareImagePath;
 
     @Transient
     private List<String> tags;

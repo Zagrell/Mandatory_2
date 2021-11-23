@@ -1,10 +1,19 @@
 const championsTableBody = document.getElementById("champions-tbody");
+const championsCardWrapper = document.getElementById("champion-wrapper");
 
-fetch("https://localhost:8080/champions")
+fetch("http://localhost:8080/champions")
     .then(response => response.json())
     .then(champions => {
-        champions.map(createChampionTableRow);
+        console.log(champions)
+        champions.map(createChampionCard);
     });
+
+function createChampionCard(champion){
+    const championCard = document.createElement("img");
+    championCard.src=champion;
+    championsCardWrapper.appendChild(championCard);
+}
+
 
 function createChampionTableRow(champion) {
     const championTableRow = document.createElement("tr");
