@@ -1,3 +1,14 @@
-p {
-    color: red;
+.card{
+    display: flex;
+    background-color: lightgrey;
+    border: solid black 1px;
+}
+
+.cardinfo{
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+.cardimage img{
+    width: 10rem;
+    height: 10rem;
 }

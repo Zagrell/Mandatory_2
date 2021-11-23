@@ -3,6 +3,7 @@ package gruppe1.backend.models;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Table(name = "champions")
@@ -10,15 +11,21 @@ import javax.persistence.*;
 public class Champion {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
-    private Long id;
-
     @Column
     private String name;
 
     @Column
-    private String role;
+    private String note;
+
+    @Transient
+    private String title;
+
+
+    @Transient
+    private List<String> tags;
+
+    @Transient
+    private String lore;
 
 
 

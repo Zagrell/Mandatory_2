@@ -6,3 +6,9 @@
 body {
     background-color: #a2bba3;
 }
+
+.card-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}

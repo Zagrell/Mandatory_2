@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.merakianalytics.orianna.Orianna;
 import com.merakianalytics.orianna.types.common.Region;
+import com.merakianalytics.orianna.types.core.staticdata.Champions;
 import gruppe1.backend.dto.MatchDTO;
 import gruppe1.backend.dto.ParticipantDTO;
 import gruppe1.backend.models.Champion;
@@ -17,6 +18,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 
@@ -63,6 +66,23 @@ public class RiotRepo {
         }
     }
 
+    public List<String> findAllChampionNames(){
+        Champions oriannaChampions = Orianna.getChampions();
+        List<String> championNameList = new ArrayList<>();
+        oriannaChampions.forEach(champion -> championNameList.add(champion.getName()));
+        return championNameList;
+    }
+
+    public List<Champion> findAllChampions(){
+        Champions oriannaChampions = Orianna.getChampions();
+        List<Champion> ourChampions = new ArrayList<>();
+        oriannaChampions.forEach(oriannaChampion -> {
+            Champion ourChampion;
+
+        });
+        return null;
+    }
+
     public Champion findChampionNamed(String championName){
         try{
             com.merakianalytics.orianna.types.core.staticdata.Champion oriannaChampion = Orianna.championNamed(championName).get();
@@ -76,7 +96,10 @@ public class RiotRepo {
 
     public Champion addRiotChampionData(Champion champion){
         com.merakianalytics.orianna.types.core.staticdata.Champion oriannaChampion = Orianna.championNamed(champion.getName()).get();
-        System.out.println(oriannaChampion);
+        champion.setTitle(oriannaChampion.getTitle());
+        champion.setTags(oriannaChampion.getTags());
+        champion.setLore(oriannaChampion.getLore());
+        System.out.println(champion);
         return champion;
     }
 
