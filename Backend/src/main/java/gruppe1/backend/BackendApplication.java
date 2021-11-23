@@ -21,12 +21,17 @@ import java.util.List;
 @SpringBootApplication
 public class BackendApplication {
 
+    static RiotRepo repo;
+
+    @Autowired
+    public void setRepo(RiotRepo repo){
+        this.repo = repo;
+    }
+
     public static void main(String[] args) throws IOException {
         SpringApplication.run(BackendApplication.class, args);
 
-        System.out.println(Orianna.getChampions());
-
-
+        repo.findChampionNamed("Lux");
 
     }
 

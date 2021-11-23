@@ -6,6 +6,7 @@ import com.merakianalytics.orianna.Orianna;
 import com.merakianalytics.orianna.types.common.Region;
 import gruppe1.backend.dto.MatchDTO;
 import gruppe1.backend.dto.ParticipantDTO;
+import gruppe1.backend.models.Champion;
 import gruppe1.backend.models.Match;
 import gruppe1.backend.models.Summoner;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,23 @@ public class RiotRepo {
         } catch (NoSuchElementException e) {
             throw new NoSuchElementException("no summoner with that name");
         }
+    }
+
+    public Champion findChampionNamed(String championName){
+        try{
+            com.merakianalytics.orianna.types.core.staticdata.Champion oriannaChampion = Orianna.championNamed(championName).get();
+            Champion ourChampion = new Champion();
+            ourChampion.setName(championName);
+            return addRiotChampionData(ourChampion);
+        }catch (NoSuchElementException e){
+            throw new NoSuchElementException("no champion with that name");
+        }
+    }
+
+    public Champion addRiotChampionData(Champion champion){
+        com.merakianalytics.orianna.types.core.staticdata.Champion oriannaChampion = Orianna.championNamed(champion.getName()).get();
+        System.out.println(oriannaChampion);
+        return champion;
     }
 
 
