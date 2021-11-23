@@ -36,6 +36,7 @@ function createSummonerCard(summoner) {
 }
 
 function createNewSummoner() {
+    document.getElementById("error-label").innerText = "";
     const name = document.getElementById("add-summoner-name").value;
 
     const newSummoner = {
@@ -51,13 +52,12 @@ function createNewSummoner() {
     })
         .then(response => {
             if (response.status === 200) {
-                return response.json();
+                createSummonerCard(response.json());
+            } else if(response.status === 404){
+                document.getElementById("error-label").innerText = "no summoner with that name";
             } else {
                 throw 'Summoner not created';
             }
-        })
-        .then(result => {
-           createSummonerCard(result);
         })
         .catch(error => console.log("Network problem", error));
 

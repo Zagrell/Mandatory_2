@@ -47,16 +47,12 @@ public class RiotRepo {
         Orianna.setDefaultRegion(Region.EUROPE_WEST);
     }
 
-    public Summoner findSummonerNamed(String name) {
-
-        try {
+    public Summoner findSummonerNamed(String name) throws IllegalStateException  {
             com.merakianalytics.orianna.types.core.summoner.Summoner oriannaSummoner = Orianna.summonerNamed(name).get();
             Summoner ourSummoner = new Summoner();
             ourSummoner.setPuuid(oriannaSummoner.getPuuid());
             return addRiotSummonerData(ourSummoner);
-        } catch (NoSuchElementException e) {
-            throw new NoSuchElementException("no summoner with that name");
-        }
+
     }
 
     public Summoner addRiotSummonerData(Summoner summoner) {
@@ -88,14 +84,14 @@ public class RiotRepo {
         return null;
     }
 
-    public Champion findChampionNamed(String championName) {
+    public Champion findChampionNamed(String championName) throws IllegalStateException {
         try {
             com.merakianalytics.orianna.types.core.staticdata.Champion oriannaChampion = Orianna.championNamed(championName).get();
             Champion ourChampion = new Champion();
             ourChampion.setName(championName);
             return addRiotChampionData(ourChampion);
-        } catch (NoSuchElementException e) {
-            throw new NoSuchElementException("no champion with that name");
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("no champion with that name");
         }
     }
 

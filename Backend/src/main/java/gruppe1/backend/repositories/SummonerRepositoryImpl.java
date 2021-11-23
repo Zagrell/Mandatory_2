@@ -36,7 +36,7 @@ class SummonerRepositoryImpl implements SummonerRepositoryCustom{
     }
 
     @Override
-    public Summoner saveSummonerWithName(String summonerName) {
+    public Summoner saveSummonerWithName(String summonerName) throws IllegalStateException {
         Summoner summonerToSave = riotRepo.findSummonerNamed(summonerName);
         summonerToSave.setNote("");
         summonerRepository.save(summonerToSave);
