@@ -38,6 +38,9 @@ public class Summoner {
     @Transient
     private int losses;
 
+    @Transient
+    private String profileIconPath;
+
 
 
 //    @ManyToOne

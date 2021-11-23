@@ -20,7 +20,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.NoSuchElementException;
 
 
@@ -36,7 +35,9 @@ public class RiotRepo {
 
     private final String apiKey;
     private final String host;
-    private static final String BASE_IMAGE_PATH = "http://ddragon.leagueoflegends.com/cdn/11.23.1/img/champion/";
+    private static final String BASE_IMAGE_PATH = "http://ddragon.leagueoflegends.com/cdn/11.23.1/img/";
+    private static final String CHAMPION_IMAGE_PATH = "champion/";
+    private static final String PROFILE_ICON_PATH = "profileicon/";
 
     @Autowired
     public RiotRepo(@Value("${api-key}") String apiKey) {
@@ -44,15 +45,6 @@ public class RiotRepo {
         host = "https://europe.api.riotgames.com";
         Orianna.setRiotAPIKey(apiKey);
         Orianna.setDefaultRegion(Region.EUROPE_WEST);
-    }
-
-    public Summoner addRiotSummonerData(Summoner summoner) {
-
-        com.merakianalytics.orianna.types.core.summoner.Summoner oriannaSummoner = Orianna.summonerWithPuuid(summoner.getPuuid()).get();
-        summoner.setName(oriannaSummoner.getName());
-        summoner.setLevel(oriannaSummoner.getLevel());
-
-        return summoner;
     }
 
     public Summoner findSummonerNamed(String name) {
@@ -67,12 +59,22 @@ public class RiotRepo {
         }
     }
 
+    public Summoner addRiotSummonerData(Summoner summoner) {
+
+        com.merakianalytics.orianna.types.core.summoner.Summoner oriannaSummoner = Orianna.summonerWithPuuid(summoner.getPuuid()).get();
+        summoner.setName(oriannaSummoner.getName());
+        summoner.setLevel(oriannaSummoner.getLevel());
+        summoner.setProfileIconPath(BASE_IMAGE_PATH + PROFILE_ICON_PATH + oriannaSummoner.getProfileIcon().getImage().getFull());
+
+        return summoner;
+    }
+
     public List<String> findAllChampionImages() {
         Champions oriannaChampions = Orianna.getChampions();
         List<String> championImageList = new ArrayList<>();
 
         oriannaChampions.forEach(champion -> {
-            championImageList.add(BASE_IMAGE_PATH + champion.getImage().getFull());
+            championImageList.add(BASE_IMAGE_PATH + CHAMPION_IMAGE_PATH + champion.getImage().getFull());
         });
         return championImageList;
     }

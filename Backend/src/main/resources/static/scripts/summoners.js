@@ -8,8 +8,14 @@ const summonerWrapper = document.getElementById("summoner-wrapper");
 
 function createSummonerCard(summoner) {
     const summonerElement = document.createElement("div");
+    const summonerInfo = document.createElement("div");
+    const summmonerImage = document.createElement("img");
     summonerElement.className = "card";
-    summonerElement.innerHTML = `
+    summonerInfo.className = "cardinfo";
+    summmonerImage.className = "cardimage";
+
+
+    summonerInfo.innerHTML = `
     <td>
         <a href="./matchHistory.html?puuid=${summoner.puuid}">
             <p>name: ${escapeHTML(summoner.name)}</p>
@@ -22,6 +28,9 @@ function createSummonerCard(summoner) {
         <p>level: ${escapeHTML(summoner.level.toString())}</p>
     </td>
     `;
+    summmonerImage.src = summoner.profileIconPath;
+    summonerElement.appendChild(summonerInfo);
+    summonerElement.appendChild(summmonerImage);
 
     summonerWrapper.appendChild(summonerElement);
 }
