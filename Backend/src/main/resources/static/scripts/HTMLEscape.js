@@ -1,4 +1,6 @@
 function escapeHTML(string) {
+    if (string == null)
+        return "";
     string = string.replace(`&`, "&amp;");
     string = string.replace(`>`, "&gt;");
     string = string.replace(`<`, "&lt;");
