@@ -33,7 +33,7 @@ function constructMatchesTableRow(matchesTableRow, match) {
 <p class="row-matches-matchStart">${timeConverter(match.matchStart)}</p>
 </td>
 <td>
-<p class="row-matches-duration">${escapeHTML(match.duration.toString())}</p>
+<p class="row-matches-duration">${secondsToMinutesAndSeconds(match.duration)}</p>
 </td>
 <td>
 <p class="row-matches-kills">${escapeHTML(match.kills.toString())}</p>
@@ -53,13 +53,12 @@ function constructMatchesTableRow(matchesTableRow, match) {
 <td>
 <p class="row-matches-note">${escapeHTML(match.note)}</p>
 </td>
-<td>
-<button id="updateNote-button-${match.matchId}">📝</button>
-</td>
-<td>
-<button style="display: none" onclick="deleteMatch(${match.id})">❌</button>
-</td>
 `;
+    const updateButton = document.createElement("button");
+    updateButton.innerText = "🗒️";
+    updateButton.addEventListener("click", () => {
+
+    });
 
     if (match.id !== null) {
         document.getElementById(`update-button-${match.id}`)
@@ -92,3 +91,4 @@ function timeConverter(UNIX_timestamp){
     var time = date + ' ' + month + ' ' + year + ' ' + (hour < 10 ? '0' + hour : hour) + ':' + (min < 10 ? '0' + min : min);
     return time;
 }
+function secondsToMinutesAndSeconds(s){return(s-(s%=60))/60+(9<s?':':':0')+s}
