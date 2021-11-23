@@ -5,9 +5,9 @@ import lombok.Data;
 @Data
 public class ParticipantDTO {
 
-    private String puuid;
-    private boolean win;
+    String puuid;
     private String summonerName;
+    boolean win;
     private int kills;
     private int deaths;
     private int assists;

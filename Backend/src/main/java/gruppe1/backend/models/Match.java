@@ -16,38 +16,16 @@ public class Match {
     private Long id;
 
     @Column
-    private String matchId;
+    private int queueId;
 
     @Column
-    private String note;
+    private boolean friendStatus;
 
-    @ManyToOne
-    @JoinColumn(name="puuid", nullable=false)
-    private Summoner summoner;
+    @Column
+    private String outcome;
 
-    @Transient
-    private boolean win;
-
-    @Transient
-    private long matchStart; //unix timestamp
-
-    @Transient
-    private long duration; // duration in seconds
-
-    @Transient
-    private int kills;
-
-    @Transient
-    private int deaths;
-
-    @Transient
-    private int assists;
-
-    @Transient
-    private String gameMode;
-
-    @Transient
-    private String championName;
+    @Column
+    private LocalDate matchDate;
 
 //    @OneToMany
 //    @JoinColumn (name = "summoner_id")
