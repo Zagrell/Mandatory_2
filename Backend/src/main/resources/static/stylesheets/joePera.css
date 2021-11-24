@@ -1,0 +1,28 @@
+body {
+    background-color: black;
+}
+
+/*moon*/
+.fa-moon {
+    animation: fall  linear forwards;
+    color: #e3c03a;
+    position: fixed;
+    top: -20px;
+    z-index: 10;
+}
+
+/*star*/
+.fa-star {
+    animation: fall  linear forwards;
+    color: yellow;
+    position: fixed;
+    top: -20px;
+    z-index: 10;
+}
+
+@keyframes fall  {
+    to {
+        transform: translateY(105vh);
+    }
+
+}

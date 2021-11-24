@@ -5,7 +5,6 @@ h1 {
 }
 
 /*jule knap med hjælp fra https://codepen.io/TackOnes1/pen/MaLQjr*/
-
 .button {
     display: inline-block;
     -webkit-box-sizing:border-box;
@@ -74,4 +73,20 @@ h1 {
     -moz-transition: 50ms linear;
     -o-transition: 50ms linear;
     transition: 50ms linear;
+}
+
+/*snowflake*/
+.fa-snowflake{
+    animation: fall  linear forwards;
+    color: white;
+    position: fixed;
+    top: -20px;
+    z-index: 10;
+}
+
+@keyframes fall  {
+    to {
+        transform: translateY(105vh);
+    }
+
 }

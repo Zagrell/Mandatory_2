@@ -1,0 +1,20 @@
+body {
+    background-color:  #3f000f;
+}
+
+/*fire*/
+.fa-fire{
+    animation: fall  linear forwards;
+    color: orangered;
+    position: fixed;
+    top: -20px;
+    z-index: 10;
+}
+
+
+@keyframes fall  {
+    to {
+        transform: translateY(105vh);
+    }
+
+}

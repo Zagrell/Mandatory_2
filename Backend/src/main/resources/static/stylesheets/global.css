@@ -71,21 +71,3 @@ body {
     text-align: center;
     width: 100%;
 }
-
-/*snowflake*/
-.fa-snowflake{
-    animation: fall  linear forwards;
-    color: white;
-    position: absolute;
-    top: -20px;
-    z-index: 10;
-}
-
-
-
-@keyframes fall  {
-    to {
-        transform: translateY(105vh);
-    }
-
-}
