@@ -31,11 +31,19 @@ public class Summoners {
         }
     }
 
-
     @DeleteMapping("summoners/{puuid}")
     public String deleteSummoner(@PathVariable String puuid){
         summonerRepository.deleteById(puuid);
         return "OK";
+    }
+
+    @PatchMapping("summoners/{puuid}")
+    public String editSummoner(@PathVariable String puuid, @RequestBody Summoner editedSummoner){
+        return summonerRepository.findById(puuid).map(foundSummoner -> {
+            foundSummoner.setNote(editedSummoner.getNote());
+            summonerRepository.save(foundSummoner);
+            return "summoner updated";
+        }).orElse("summoner not found");
     }
 
 

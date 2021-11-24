@@ -1,16 +1,38 @@
 .card{
     background-color: lightgrey;
     border: solid black 1px;
-    padding-left: 1rem;
-    padding-right: 1rem;
 }
 
 .cardinfo{
     padding-left: 1rem;
     padding-right: 1rem;
+    width: 11rem;
+}
+
+.note{
+    overflow:hidden;
+    height: 1.2em;
+    background-color:lightgrey;
+    z-index:10;
+}
+.note:hover{
+    overflow:visible;
+    height:auto;
+    max-width:20em;
+}
+
+.cardinfo:hover, .cardimage:hover{
+    cursor: pointer;
 }
 
 .cardimage{
-    width: 10rem;
-    height: 10rem;
+    width: 11rem;
+    height: 11rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.cardaction{
+    display: flex;
+    justify-content: flex-end;
 }
