@@ -12,14 +12,17 @@ fetch("http://localhost:8080/champions/" + name)
         console.log(champion)
         const divInfo = document.createElement("div");
         divInfo.innerHTML = `
+            <p id="name">${escapeHTML(champion.name)}</p>
+            <p id="title">${escapeHTML(champion.title)}</p>
+            <p id="tags">Tags: ${escapeHTML(champion.tags.toString())}</p>
             <img src=${champion.squareImagePath}>
-            <button onclick="setNote()">set note</button>
+            <br>
             <input id="set-note-input" type="text">
-            <p>${escapeHTML(champion.name)}</p>
-            <p>${escapeHTML(champion.title)}</p>
+            <br>
+            <button onclick="setNote()">Add note</button>
             <p id="champion-note">${escapeHTML(champion.note)}</p>
-            <p>${escapeHTML(champion.tags.toString())}</p>
-            <p>${escapeHTML(champion.lore)}</p>
+            <p id="lore-header">Lore</p>
+            <p id="lore">${escapeHTML(champion.lore)}</p>
         `;
         mainDiv.appendChild(divInfo);
     })

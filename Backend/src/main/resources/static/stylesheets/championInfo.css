@@ -1,0 +1,60 @@
+#set-note-input {
+    background-color: black;
+    color: white;
+    height: 100px;
+    font-size: 12pt;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    font-size: 1rem;
+    text-align: center;
+    position: relative;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0.5rem 0.75rem;
+    border: 2px solid transparent;
+    transition: 0.1s;
+}
+
+#champion-data-div {
+    text-align: center;
+}
+
+.center {
+    left: 50%;
+}
+
+#name {
+    color: red;
+    font-size: 20pt;
+}
+
+#title {
+    color: white;
+}
+
+#champion-note {
+    color: red;
+}
+
+#tags {
+    color: white;
+}
+
+#lore {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border: solid #1f1e1e;
+    width: 300px;
+    color: #be1717;
+}
+
+#lore-header {
+    color: white;
+    font-size: 20pt;
+}
