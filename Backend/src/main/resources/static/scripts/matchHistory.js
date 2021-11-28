@@ -50,22 +50,52 @@ function constructMatchesTableRow(matchesTableRow, match) {
 <td>
     <p class="row-matches-champion">${escapeHTML(match.championName)}</p>
 </td>
-<td>
-    <p class="row-matches-note">${escapeHTML(match.note)}</p>
-</td>
 `;
-    const updateButton = document.createElement("button");
-    updateButton.innerText = "🗒️";
-    updateButton.addEventListener("click", () => {
+    const actionTd = document.createElement("td");
 
-    });
+    const saveButton = document.createElement("button");
+    saveButton.innerText = "save";
 
-    if (match.id !== null) {
-        document.getElementById(`update-button-${match.id}`)
-            .addEventListener("click", () => updateMatch(match))
-        document.getElementById(`update-button-${match.id}`).style.display="";
+    const deleteButton = document.createElement("button");
+    deleteButton.innerText = "delete";
+    if(match.id == null){
+        deleteButton.style.display = "none";
+    }else{
+        saveButton.style.display = "none";
     }
 
+
+    saveButton.addEventListener("click", () => {
+        fetch("http://localhost:8080/matches/", {
+            method: "POST",
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            },
+            body: JSON.stringify(match)
+        }).then(response => {
+            if (response.status === 200) {
+                saveButton.style.display = "none";
+                deleteButton.style.display = "";
+            }
+        });
+    });
+
+    deleteButton.addEventListener("click", () => {
+        fetch("http://localhost:8080/matches/" + match.id, {
+            method: "DELETE"
+        }).then(response => {
+            if (response.status === 200) {
+                saveButton.style.display = "";
+                deleteButton.style.display = "none";
+            } else {
+                console.log(response.status);
+            }
+        });
+    })
+
+    actionTd.appendChild(saveButton);
+    actionTd.appendChild(deleteButton);
+    matchesTableRow.appendChild(actionTd)
 }
 
 function deleteMatch(matchId) {

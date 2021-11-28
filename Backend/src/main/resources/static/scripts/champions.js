@@ -1,10 +1,14 @@
-const championsTableBody = document.getElementById("champions-tbody");
+
 const championsCardWrapper = document.getElementById("champion-wrapper");
+let champions;
+let filteredChampions;
+
 
 fetch("http://localhost:8080/champions")
     .then(response => response.json())
-    .then(champions => {
-        console.log(champions)
+    .then(result => {
+        champions = result;
+        filteredChampions = champions;
         champions.map(createChampionCard);
     });
 
@@ -19,25 +23,11 @@ function createChampionCard(champion){
     championsCardWrapper.appendChild(link);
 }
 
-
-function createChampionTableRow(champion) {
-    const championTableRow = document.createElement("tr");
-    championTableRow.id = champion.id;
-
-    championsTableBody.appendChild(championTableRow);
-
-    constructChampionTableRow(championTableRow, champion);
+function handleSearchName(event) {
+    championsCardWrapper.innerHTML = "";
+    const searchTerm = event.target.value.toLowerCase();
+    filteredChampions.filter(champion => champion.name.toLowerCase().includes(searchTerm))
+        .map(createChampionCard);
 }
 
-function constructChampionTableRow(championTableRow, champion) {
-    championTableRow.innerHTML = `
-    <td>
-        <a href="./champions.html?championId=${champion.id}">
-            <p class="row-champion-name">${escapeHTML(champion.name)}</p>
-        </a>
-    <td>
-        <p class="row-champion-role">${escapeHTML(champion.role)}</p>
-    </td>
-    `;
-
-}
+document.getElementById("name-search").addEventListener("input", handleSearchName);

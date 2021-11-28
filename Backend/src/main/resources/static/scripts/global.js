@@ -14,7 +14,7 @@ navBar.innerHTML=`
         <p>Champions</p>
     </a>
     <a href="../html/matches.html">
-        <p>Matches</p>
+        <p>Saved Matches</p>
     </a>
 </div>
     <a href="/logout">

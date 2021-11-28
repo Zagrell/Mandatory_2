@@ -19,7 +19,7 @@ fetch("http://localhost:8080/champions/" + name)
             <br>
             <input id="set-note-input" type="text">
             <br>
-            <button onclick="setNote()">Add note</button>
+            <button onclick="setNote()">Set note</button>
             <p id="champion-note">${escapeHTML(champion.note)}</p>
             <p id="lore-header">Lore</p>
             <p id="lore">${escapeHTML(champion.lore)}</p>

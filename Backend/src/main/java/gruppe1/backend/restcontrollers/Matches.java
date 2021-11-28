@@ -39,15 +39,13 @@ public class Matches {
         return "OK";
     }
 
-    @PutMapping("matches/{id}")
+    @PatchMapping("matches/{id}")
     public String updateMatch(@PathVariable Long id, @RequestBody Match matchToUpdateWith){
-        if(matchRepository.existsById(id)){
-            matchToUpdateWith.setId(id);
-            matchRepository.save(matchToUpdateWith);
-            return "match was created";
-        }else{
-            return "match not found";
-        }
+        return matchRepository.findById(id).map(foundMatch -> {
+            foundMatch.setNote(matchToUpdateWith.getNote());
+            matchRepository.save(foundMatch);
+            return "match updated";
+        }).orElse("match not found");
     }
 
 
