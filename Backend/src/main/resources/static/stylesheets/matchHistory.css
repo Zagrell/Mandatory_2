@@ -1,8 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Muli&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+
 table  {
-    border: solid black;
+    border: solid firebrick;
+    border-collapse: collapse;
+    font-family: "Muli", sans-serif;
 
 }
 
 table th {
-    border: solid black;
+    border: solid firebrick;
+    padding: 1rem;
+    font-family: "Muli", sans-serif;
 }
