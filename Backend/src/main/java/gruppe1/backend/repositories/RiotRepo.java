@@ -61,16 +61,18 @@ public class RiotRepo {
         summoner.setName(oriannaSummoner.getName());
         summoner.setLevel(oriannaSummoner.getLevel());
         summoner.setProfileIconPath(BASE_IMAGE_PATH + PROFILE_ICON_PATH + oriannaSummoner.getProfileIcon().getImage().getFull());
-
         return summoner;
     }
 
-    public List<String> findAllChampionImages() {
+    public List<Champion> findAllChampionImages() {
         Champions oriannaChampions = Orianna.getChampions();
-        List<String> championImageList = new ArrayList<>();
+        List<Champion> championImageList = new ArrayList<>();
 
-        oriannaChampions.forEach(champion -> {
-            championImageList.add(BASE_IMAGE_PATH + CHAMPION_IMAGE_PATH + champion.getImage().getFull());
+        oriannaChampions.forEach(oriannaChampion -> {
+            Champion champion = new Champion();
+            champion.setSquareImagePath(BASE_IMAGE_PATH + CHAMPION_IMAGE_PATH + oriannaChampion.getImage().getFull());
+            champion.setName(oriannaChampion.getName());
+            championImageList.add(champion);
         });
         return championImageList;
     }
@@ -100,6 +102,7 @@ public class RiotRepo {
         champion.setTitle(oriannaChampion.getTitle());
         champion.setTags(oriannaChampion.getTags());
         champion.setLore(oriannaChampion.getLore());
+        champion.setSquareImagePath(BASE_IMAGE_PATH + CHAMPION_IMAGE_PATH + oriannaChampion.getImage().getFull());
         System.out.println(champion);
         return champion;
     }

@@ -7,7 +7,7 @@ import java.util.List;
 public interface ChampionRepositoryCustom {
 
 
-    List<String> findAllChampions();
+    List<Champion> findAllChampions();
 
     Champion findChampionsWithName(String name);
 

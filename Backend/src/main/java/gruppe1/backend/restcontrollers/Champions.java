@@ -18,13 +18,18 @@ public class Champions {
 
 
     @GetMapping("/champions")
-    public List<String> getChampions(){
+    public List<Champion> getChampions(){
         return championRepository.findAllChampions();
     }
 
+    @GetMapping("/champions/{championName}")
+    public Champion getChampion(@PathVariable String championName){
+        return championRepository.findChampionsWithName(championName);
+    }
+
     @PostMapping("/champions/{championName}")
-    public Champion saveChampion(@PathVariable String championName){
-        return null;
+    public Champion saveChampion(@PathVariable String championName,@RequestBody Champion newChampion){
+        return championRepository.save(newChampion);
     }
 
     @DeleteMapping("/champion/{championName}")

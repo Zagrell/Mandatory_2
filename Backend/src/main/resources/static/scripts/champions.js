@@ -9,9 +9,14 @@ fetch("http://localhost:8080/champions")
     });
 
 function createChampionCard(champion){
+    const link = document.createElement("a");
+    link.href = `./championInfo.html?championName=${champion.name}`;
     const championCard = document.createElement("img");
-    championCard.src=champion;
-    championsCardWrapper.appendChild(championCard);
+    championCard.src=champion.squareImagePath;
+
+
+    link.appendChild(championCard);
+    championsCardWrapper.appendChild(link);
 }
 
 

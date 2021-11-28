@@ -4,6 +4,7 @@ import gruppe1.backend.models.Champion;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ChampionRepositoryImpl implements ChampionRepositoryCustom{
 
@@ -14,14 +15,23 @@ public class ChampionRepositoryImpl implements ChampionRepositoryCustom{
     ChampionRepository championRepository;
 
     @Override
-    public List<String> findAllChampions() {
+    public List<Champion> findAllChampions() {
         return riotRepo.findAllChampionImages();
     }
 
     @Override
     public Champion findChampionsWithName(String name) {
         try {
-            Champion champion = championRepository.findById(name).get();
+
+            Optional<Champion> optionalChampion = championRepository.findById(name);
+            Champion champion;
+
+            if(optionalChampion.isPresent()){
+                champion = optionalChampion.get();
+            }else{
+                champion = new Champion();
+                champion.setName(name);
+            }
             return riotRepo.addRiotChampionData(champion);
         } catch (Exception e) {
             e.printStackTrace();
