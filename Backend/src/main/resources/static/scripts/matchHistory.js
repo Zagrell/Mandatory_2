@@ -27,31 +27,31 @@ function createMatchTableRow(matches) {
 function constructMatchesTableRow(matchesTableRow, match) {
     matchesTableRow.innerHTML = `
 <td>
-<p class="row-matches-win">${(match.win? 'Win' : 'Loss')}</p>
+    <p class="row-matches-win">${(match.win? 'Win' : 'Loss')}</p>
 </td>
 <td>
-<p class="row-matches-matchStart">${timeConverter(match.matchStart)}</p>
+    <p class="row-matches-matchStart">${timeConverter(match.matchStart)}</p>
 </td>
 <td>
-<p class="row-matches-duration">${secondsToMinutesAndSeconds(match.duration)}</p>
+    <p class="row-matches-duration">${secondsToMinutesAndSeconds(match.duration)}</p>
 </td>
 <td>
-<p class="row-matches-kills">${escapeHTML(match.kills.toString())}</p>
+    <p class="row-matches-kills">${escapeHTML(match.kills.toString())}</p>
 </td>
 <td>
-<p class="row-matches-deaths">${escapeHTML(match.deaths.toString())}</p>
+    <p class="row-matches-deaths">${escapeHTML(match.deaths.toString())}</p>
 </td>
 <td>
-<p class="row-matches-assists">${escapeHTML(match.assists.toString())}</p>
+    <p class="row-matches-assists">${escapeHTML(match.assists.toString())}</p>
 </td>
 <td>
-<p class="row-matches-gameMode">${escapeHTML(match.gameMode.toLocaleLowerCase())}</p>
+    <p class="row-matches-gameMode">${escapeHTML(match.gameMode.toLocaleLowerCase())}</p>
 </td>
 <td>
-<p class="row-matches-champion">${escapeHTML(match.championName)}</p>
+    <p class="row-matches-champion">${escapeHTML(match.championName)}</p>
 </td>
 <td>
-<p class="row-matches-note">${escapeHTML(match.note)}</p>
+    <p class="row-matches-note">${escapeHTML(match.note)}</p>
 </td>
 `;
     const updateButton = document.createElement("button");
